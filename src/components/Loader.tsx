@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import Image from "next/image";
 import logo from '@/assets/trio-fitness-logo.png';
 
 const Loader = ({ onComplete }: { onComplete: () => void }) => {
@@ -27,7 +28,7 @@ const Loader = ({ onComplete }: { onComplete: () => void }) => {
         pointerEvents: progress >= 100 ? 'none' : 'auto',
       }}
     >
-      <img src={logo} alt="Trio Fitness" className="w-32 h-32 object-contain loader-pulse" />
+      <Image src={logo} alt="Trio Fitness" className="w-32 h-32 object-contain loader-pulse" />
       <div className="mt-8 w-48 h-1 bg-muted rounded-full overflow-hidden">
         <div
           className="h-full bg-primary rounded-full transition-all duration-100"

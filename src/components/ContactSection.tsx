@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
+import type { FormEvent } from "react";
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { MapPin, Phone, Clock, Send } from 'lucide-react';
+import { MapPin, Phone, Clock, Send, Mail } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -12,7 +13,9 @@ const schedule = [
 
 const ContactSection = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
-  const [form, setForm] = useState({ name: '', phone: '', goal: '', message: '' });
+  const [form, setForm] = useState({ name: '', email: '', phone: '', goal: '', message: '' });
+  const [submitting, setSubmitting] = useState(false);
+  const [statusMessage, setStatusMessage] = useState('');
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -28,10 +31,33 @@ const ContactSection = () => {
     return () => ctx.revert();
   }, []);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    const msg = `Hi Trio Fitness! I'm ${form.name}. My goal: ${form.goal}. ${form.message}`;
-    window.open(`https://wa.me/917738380154?text=${encodeURIComponent(msg)}`, '_blank');
+    setSubmitting(true);
+    setStatusMessage('');
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+      });
+
+      if (!response.ok) {
+        const payload = await response.json().catch(() => null);
+        const details =
+          payload?.details || payload?.error || 'Failed to submit form';
+        throw new Error(details);
+      }
+
+      setStatusMessage('Message sent successfully. We will contact you soon.');
+      setForm({ name: '', email: '', phone: '', goal: '', message: '' });
+    } catch (error) {
+      const message = error instanceof Error ? error.message : 'Could not send your message. Please try again.';
+      setStatusMessage(message);
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -64,6 +90,16 @@ const ContactSection = () => {
                 <h4 className="font-display text-lg font-semibold mb-1">Phone</h4>
                 <a href="tel:07738380154" className="text-muted-foreground hover:text-primary transition-colors font-body">
                   077383 80154
+                </a>
+              </div>
+            </div>
+
+            <div className="flex gap-4">
+              <Mail className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
+              <div>
+                <h4 className="font-display text-lg font-semibold mb-1">Email</h4>
+                <a href="mailto:akkii77580@gmail.com" className="text-muted-foreground hover:text-primary transition-colors font-body">
+                  akkii77580@gmail.com
                 </a>
               </div>
             </div>
@@ -124,6 +160,17 @@ const ContactSection = () => {
                 />
               </div>
               <div>
+                <label className="font-condensed text-sm tracking-wider uppercase text-muted-foreground mb-2 block">Email</label>
+                <input
+                  type="email"
+                  required
+                  value={form.email}
+                  onChange={e => setForm(f => ({ ...f, email: e.target.value }))}
+                  className="w-full bg-card border border-border rounded px-4 py-3 text-foreground font-body focus:outline-none focus:border-primary transition-colors"
+                  placeholder="Your Email Address"
+                />
+              </div>
+              <div>
                 <label className="font-condensed text-sm tracking-wider uppercase text-muted-foreground mb-2 block">Fitness Goal</label>
                 <select
                   value={form.goal}
@@ -150,11 +197,15 @@ const ContactSection = () => {
               </div>
               <button
                 type="submit"
+                disabled={submitting}
                 className="btn-glow bg-primary text-primary-foreground w-full py-4 rounded font-condensed tracking-widest uppercase flex items-center justify-center gap-2"
               >
                 <Send className="w-5 h-5" />
-                Send Message
+                {submitting ? 'Sending...' : 'Send Message'}
               </button>
+              {statusMessage ? (
+                <p className="text-sm text-muted-foreground font-body">{statusMessage}</p>
+              ) : null}
             </form>
           </div>
         </div>

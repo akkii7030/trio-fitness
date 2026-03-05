@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import Image from "next/image";
 import { Menu, X, Phone } from 'lucide-react';
 import logo from '@/assets/trio-fitness-logo.png';
 
@@ -30,7 +31,7 @@ const Header = () => {
       <div className="container mx-auto px-4 lg:px-8">
         <div className="flex items-center justify-between h-20">
           <a href="#home" className="flex items-center gap-3">
-            <img src={logo} alt="Trio Fitness" className="w-12 h-12 object-contain" />
+            <Image src={logo} alt="Trio Fitness" className="w-12 h-12 object-contain" />
             <div className="hidden sm:block">
               <span className="font-display text-xl tracking-wider text-foreground">TRIO FITNESS</span>
             </div>

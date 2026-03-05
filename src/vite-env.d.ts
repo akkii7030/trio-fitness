@@ -1,1 +1,1 @@
-/// <reference types="vite/client" />
+// Legacy Vite type reference removed after Next.js migration.

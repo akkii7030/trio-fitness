@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import Image from "next/image";
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Dumbbell, Users, Clock, ClipboardList } from 'lucide-react';
@@ -59,9 +60,9 @@ const AboutSection = () => {
             </div>
           </div>
           <div className="about-image relative">
-            <img src={trainerImg} alt="Personal Training at Trio Fitness" className="rounded-lg w-full object-cover aspect-square" />
+            <Image src={trainerImg} alt="Personal Training at Trio Fitness" className="rounded-lg w-full object-cover aspect-square" />
             <div className="absolute -bottom-6 -left-6 w-48 h-48 rounded-lg overflow-hidden border-4 border-primary hidden lg:block">
-              <img src={gymInterior} alt="Trio Fitness Interior" className="w-full h-full object-cover" />
+              <Image src={gymInterior} alt="Trio Fitness Interior" className="w-full h-full object-cover" />
             </div>
           </div>
         </div>

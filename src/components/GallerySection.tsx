@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import Image from "next/image";
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { X } from 'lucide-react';
@@ -56,7 +57,7 @@ const GallerySection = () => {
               className="gallery-item relative overflow-hidden rounded-lg cursor-pointer group aspect-square"
               onClick={() => setLightbox(i)}
             >
-              <img
+              <Image
                 src={img.src}
                 alt={img.alt}
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
@@ -78,9 +79,11 @@ const GallerySection = () => {
           <button className="absolute top-6 right-6 text-foreground hover:text-primary transition-colors" onClick={() => setLightbox(null)}>
             <X className="w-8 h-8" />
           </button>
-          <img
+          <Image
             src={images[lightbox].src}
             alt={images[lightbox].alt}
+            width={1200}
+            height={900}
             className="max-w-full max-h-[85vh] object-contain rounded-lg"
             onClick={e => e.stopPropagation()}
           />

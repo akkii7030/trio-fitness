@@ -54,11 +54,24 @@ npm run dev
 
 This project is built with:
 
-- Vite
+- Next.js
 - TypeScript
 - React
 - shadcn-ui
 - Tailwind CSS
+
+## Contact Form Email Setup
+
+The contact form sends submissions to `akkii77580@gmail.com` using Nodemailer.
+
+Create a `.env.local` file with:
+
+```sh
+GMAIL_USER=yourgmail@gmail.com
+GMAIL_APP_PASSWORD=your_16_char_gmail_app_password
+```
+
+Use a Gmail App Password (not your normal Gmail password).
 
 ## How can I deploy this project?
 

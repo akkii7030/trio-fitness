@@ -1,5 +1,6 @@
-import { Link } from 'react-router-dom';
-import { Instagram, Facebook, Youtube, Phone, Mail, MapPin } from 'lucide-react';
+import Image from "next/image";
+import Link from "next/link";
+import { Instagram, Facebook, Youtube, Phone, MapPin } from 'lucide-react';
 import logo from '@/assets/trio-fitness-logo.png';
 
 const Footer = () => {
@@ -9,7 +10,7 @@ const Footer = () => {
         <div className="grid md:grid-cols-4 gap-12">
           {/* Logo */}
           <div className="md:col-span-1">
-            <img src={logo} alt="Trio Fitness" className="w-20 h-20 object-contain mb-4" />
+            <Image src={logo} alt="Trio Fitness" className="w-20 h-20 object-contain mb-4" />
             <p className="font-display text-xl tracking-wider mb-1">TRIO FITNESS</p>
             <p className="font-condensed text-sm text-muted-foreground tracking-widest">Heart, Body & Soul</p>
           </div>
@@ -59,8 +60,8 @@ const Footer = () => {
               <a href="#" className="text-muted-foreground hover:text-primary transition-colors"><Youtube className="w-5 h-5" /></a>
             </div>
             <div className="flex flex-col gap-2">
-              <Link to="/privacy-policy" className="font-body text-sm text-muted-foreground hover:text-primary transition-colors">Privacy Policy</Link>
-              <Link to="/terms" className="font-body text-sm text-muted-foreground hover:text-primary transition-colors">Terms & Conditions</Link>
+              <Link href="/privacy-policy" className="font-body text-sm text-muted-foreground hover:text-primary transition-colors">Privacy Policy</Link>
+              <Link href="/terms" className="font-body text-sm text-muted-foreground hover:text-primary transition-colors">Terms & Conditions</Link>
             </div>
           </div>
         </div>
